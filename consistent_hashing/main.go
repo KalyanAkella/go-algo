@@ -65,17 +65,17 @@ func NewConsistentHashingPool(servers []string, replication_factor uint) (*CHPoo
 
 func (pool *CHPool) PrintState() {
 	fmt.Println(pool.key_to_server_map)
-	avg := 0
+	var avg float32 = 0
 	num_servers := len(pool.server_keys)
 	for _, server := range pool.key_to_server_map {
-		avg += len(server.Data) / num_servers
+		avg += (float32(len(server.Data)) / float32(num_servers))
 	}
-	std_dev := 0
+	var std_dev float64 = 0
 	for _, server := range pool.key_to_server_map {
-		diff := len(server.Data) - avg
+		diff := float64(len(server.Data)) - float64(avg)
 		std_dev += diff * diff
 	}
-	result := math.Sqrt(float64(std_dev / num_servers))
+	result := math.Sqrt(std_dev / float64(num_servers))
 	fmt.Printf("Standard Deviation: %v\n", result)
 }
 

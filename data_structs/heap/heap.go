@@ -17,6 +17,14 @@ func New(capacity int) *Heap {
 	return &Heap{nodes: nodes, length: capacity, size: 0}
 }
 
+func New(arr []int) *Heap {
+	check(len(arr) > 0, "Must provide non-empty array")
+	capacity := len(arr)
+	nodes := make([]Node, capacity)
+	heap := &Heap{nodes: nodes, length: capacity, size: capacity}
+	// TODO:
+}
+
 func (this *Heap) Root() Node {
 	return this.nodes[0]
 }

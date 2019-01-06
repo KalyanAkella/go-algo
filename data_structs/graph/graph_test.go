@@ -34,7 +34,8 @@ func TestMain(m *testing.M) {
 	f := &Vertex{Label: "f"}
 	g := &Vertex{Label: "g"}
 	root = a
-	graph = New(root, false)
+	vertices = []*Vertex{a, b, c, d, e, f, g}
+	graph = New(vertices, true)
 	graph.AddEdge(a, b)
 	graph.AddEdge(a, c)
 	graph.AddEdge(a, e)
@@ -42,8 +43,11 @@ func TestMain(m *testing.M) {
 	graph.AddEdge(b, f)
 	graph.AddEdge(c, g)
 	graph.AddEdge(e, f)
-	vertices = []*Vertex{a, b, c, d, e, f, g}
 	os.Exit(m.Run())
+}
+
+func TestTopologicalOrder(t *testing.T) {
+	assert(t, "Incorrect Topological order", []string{"a", "b", "c", "d", "e", "f", "g"}, graph.TopologicalOrder())
 }
 
 func flushMeta() {
@@ -54,7 +58,12 @@ func flushMeta() {
 
 func TestDepthFirstTraversal(t *testing.T) {
 	defer flushMeta()
-	assert(t, "Incorrect DFS Traversal", []string{"a", "b", "d", "f", "e", "c", "g"}, graph.DepthFirstTraversal_recur(root))
+	assert(t, "Incorrect DFS Traversal", []string{"a", "e", "f", "c", "g", "b", "d"}, graph.DepthFirstTraversal(root))
+}
+
+func TestDepthFirstTraversalRecur(t *testing.T) {
+	defer flushMeta()
+	assert(t, "Incorrect DFS Traversal", []string{"a", "b", "d", "f", "c", "g", "e"}, graph.DepthFirstTraversal_recur(root))
 }
 
 func TestBreadthFirstTraversal(t *testing.T) {

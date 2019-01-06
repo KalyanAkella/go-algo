@@ -35,4 +35,5 @@ func max(a, b int) int {
 func main() {
 	fmt.Println(best_profit([]int{10, 7, 5, 8, 11, 9}))
 	fmt.Println(best_profit([]int{10, 9, 8, 7, 6, 5}))
+	fmt.Println(best_profit([]int{200, 500, 1000, 700, 30, 400, 900, 400, 50}))
 }
